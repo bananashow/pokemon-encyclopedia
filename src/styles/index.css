@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+
+@font-face {
+  font-family: "gmarket-light";
+  src: url("./fonts/GmarketSansTTFLight.ttf");
+}
+
+@font-face {
+  font-family: "gmarket-medium";
+  src: url("fonts/GmarketSansTTFMedium.ttf");
+}
+
+@font-face {
+  font-family: "gmarket-bold";
+  src: url("./fonts/GmarketSansTTFBold.ttf");
+}
