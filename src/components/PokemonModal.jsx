@@ -25,28 +25,28 @@ export const PokemonModal = ({ pokemonInfo, setIsOpenedModal }) => {
             </div>
             <div>
               <div>키</div>
-              <div>{pokemonInfo.height}</div>
+              <div>{pokemonInfo.height}m</div>
             </div>
             <div>
               <div>몸무게</div>
-              <div>{pokemonInfo.weight}</div>
+              <div>{pokemonInfo.weight}kg</div>
             </div>
           </div>
           <div className="pokemon-stats">
             <div>
-              <div className="stats-title">hp</div>
+              <div className="stats-title">체력</div>
               <div>{pokemonInfo.baseStats[0].value}</div>
-              <div className="stats-title">attack</div>
+              <div className="stats-title">공격력</div>
               <div>{pokemonInfo.baseStats[1].value}</div>
-              <div className="stats-title">defense</div>
+              <div className="stats-title">방어력</div>
               <div>{pokemonInfo.baseStats[2].value}</div>
             </div>
             <div>
-              <div className="stats-title">special-attack</div>
+              <div className="stats-title">특수 공격력</div>
               <div>{pokemonInfo.baseStats[3].value}</div>
-              <div className="stats-title">special-defense</div>
+              <div className="stats-title">특수 방어력</div>
               <div>{pokemonInfo.baseStats[4].value}</div>
-              <div className="stats-title">speed</div>
+              <div className="stats-title">스피드</div>
               <div>{pokemonInfo.baseStats[5].value}</div>
             </div>
           </div>
@@ -72,13 +72,13 @@ const Overlay = styled.div`
 const Modal = styled.div`
   /* background: url(${modalBackgd}) no-repeat;
   background-size: cover; */
+  color: #fff;
   background-color: #3b3838;
-  width: 65%;
+  min-width: 70%;
   height: 70vh;
   padding: 32px 48px;
   border-radius: 50px;
   opacity: 0.93;
-  transform: translate(-50%, -50%);
   z-index: 1000;
 
   display: flex;
@@ -86,6 +86,10 @@ const Modal = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   button {
     position: absolute;

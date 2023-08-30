@@ -5,8 +5,8 @@ export const jaehaInfo = {
   name: "Jaeha",
   koreanName: "송재하",
   color: "blue",
-  height: 130,
-  weight: 29,
+  height: 1.25,
+  weight: 21,
   types: ["fighting", "poison"],
   images: {
     dreamWorldFront: jaehaPhoto,
