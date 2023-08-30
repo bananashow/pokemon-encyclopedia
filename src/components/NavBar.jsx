@@ -1,8 +1,7 @@
 import { styled } from "styled-components";
 import pokeball from "../assets/pokeball.png";
 import { useNavigate } from "react-router-dom";
-import { BsFillSearchHeartFill } from "react-icons/bs";
-import { PokemonList } from "./PokemonList";
+import { Search } from "./Search";
 
 export const NavBar = () => {
   const navigation = useNavigate();
@@ -17,12 +16,8 @@ export const NavBar = () => {
               포켓몬 도감
             </div>
           </Title>
-          <input type="text" placeholder="포켓몬 이름을 입력하세요" />
-          <button>
-            <BsFillSearchHeartFill />
-          </button>
+          <Search />
         </NavWrap>
-        <PokemonList />
       </NavContainer>
     </>
   );

@@ -1,13 +1,21 @@
 import { styled } from "styled-components";
-import { useRecoilValue } from "recoil";
-import { getPokemonsInfoSelector } from "../Recoil/Selector";
 import { PokemonType } from "../components/PokemonType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PokemonModal } from "./PokemonModal";
+import { getPokemonsInfo } from "../utils/getPokemon";
 
 export const PokemonCard = ({ name }) => {
-  const pokemonInfo = useRecoilValue(getPokemonsInfoSelector(name));
   const [isOpenedModal, setIsOpenedModal] = useState(false);
+  const [pokemonInfo, setPokemonInfo] = useState();
+
+  const getPokemonInfo = async (name) => {
+    const result = await getPokemonsInfo(name);
+    setPokemonInfo(result);
+  };
+
+  useEffect(() => {
+    getPokemonInfo(name);
+  }, []);
 
   const handleCard = () => {
     setIsOpenedModal(true);
@@ -16,11 +24,11 @@ export const PokemonCard = ({ name }) => {
   return (
     <>
       <Card onClick={handleCard}>
-        <img src={pokemonInfo.images.officialAtworkFront} alt="포켓몬" />
-        <div className="id">No.{pokemonInfo.id}</div>
-        <div className="name">{pokemonInfo.koreanName}</div>
+        <img src={pokemonInfo?.images.officialAtworkFront} alt="포켓몬" />
+        <div className="id">No.{pokemonInfo?.id}</div>
+        <div className="name">{pokemonInfo?.koreanName}</div>
         <div className="type">
-          {pokemonInfo.types.map((type, idx) => {
+          {pokemonInfo?.types.map((type, idx) => {
             return <PokemonType key={`${type}_${idx}`} type={type} />;
           })}
         </div>
@@ -42,7 +50,6 @@ const Card = styled.div`
   align-items: center;
   justify-content: center;
   gap: 6px;
-  color: #000;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
