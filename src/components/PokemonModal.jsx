@@ -2,18 +2,39 @@ import { styled } from "styled-components";
 import { GiCancel } from "react-icons/gi";
 import modalBackgd from "../assets/modal-bg.jpg";
 import { PokemonType } from "./PokemonType";
+import { useRecoilState } from "recoil";
+import { participatingPokemonAtom } from "../Recoil/Atom";
 
 export const PokemonModal = ({ pokemonInfo, setIsOpenedModal }) => {
-  console.log(pokemonInfo);
+  const [participatingPokemon, setParticipatingPokemon] = useRecoilState(
+    participatingPokemonAtom
+  );
+
+  const participateInBattle = () => {
+    if (participatingPokemon.length === 0) {
+      setParticipatingPokemon([pokemonInfo]);
+    } else if (participatingPokemon.length === 1) {
+      setParticipatingPokemon([...participatingPokemon, pokemonInfo]);
+    } else {
+      alert("자리가 없어요!");
+    }
+  };
+
   return (
     <>
       <Overlay onClick={() => setIsOpenedModal(false)} />
       <Modal $modalBackgd={modalBackgd}>
         <LeftSection>
           <div className="id">No.{pokemonInfo.id}</div>
-          <div className="en-name">{pokemonInfo.name}</div>
-          <h2>{pokemonInfo.koreanName}</h2>
+          <h2>
+            {pokemonInfo.koreanName}
+            <span className="en-name">({pokemonInfo.name})</span>
+          </h2>
+
           <img src={pokemonInfo.images.officialAtworkFront} alt="포켓몬" />
+          <button className="fight" onClick={participateInBattle}>
+            FIGHT
+          </button>
         </LeftSection>
         <RightSection>
           <div className="pokemon-body">
@@ -51,7 +72,7 @@ export const PokemonModal = ({ pokemonInfo, setIsOpenedModal }) => {
             </div>
           </div>
         </RightSection>
-        <button onClick={() => setIsOpenedModal(false)}>
+        <button className="closeModal" onClick={() => setIsOpenedModal(false)}>
           <GiCancel />
         </button>
       </Modal>
@@ -75,7 +96,7 @@ const Modal = styled.div`
   color: #fff;
   background-color: #3b3838;
   min-width: 70%;
-  height: 70vh;
+  height: 75vh;
   padding: 32px 48px;
   border-radius: 50px;
   opacity: 0.93;
@@ -91,7 +112,7 @@ const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  button {
+  .closeModal {
     position: absolute;
     right: 30px;
     top: 30px;
@@ -101,6 +122,7 @@ const Modal = styled.div`
     background-color: inherit;
     cursor: pointer;
     transition: all 0.4s;
+    z-index: -1;
 
     &:hover {
       color: #d13d3d;
@@ -128,6 +150,21 @@ const LeftSection = styled.div`
 
   img {
     width: 450px;
+  }
+
+  .fight {
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: #f36067;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.4s;
+
+    &:hover {
+      background-color: #d8535a;
+    }
   }
 `;
 

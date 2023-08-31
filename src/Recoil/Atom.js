@@ -9,3 +9,8 @@ export const searchedPokemonAtom = atom({
   key: "searchedPokemonAtom",
   default: null,
 });
+
+export const participatingPokemonAtom = atom({
+  key: "participatingPokemonAtom",
+  default: [],
+});

@@ -1,3 +1,4 @@
+import { BattleModal } from "./components/BattleModal";
 import { NavBar } from "./components/NavBar";
 import { PokemonList } from "./components/PokemonList";
 import { GlobalStyle } from "./styles/GlobalStyle";
@@ -10,6 +11,7 @@ function App() {
         <GlobalStyle />
         <NavBar />
         <PokemonList />
+        <BattleModal />
       </Suspense>
     </>
   );
