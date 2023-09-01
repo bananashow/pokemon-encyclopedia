@@ -1,94 +1,136 @@
 import { styled } from "styled-components";
 import { PokemonCard } from "./PokemonCard";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { getPokemonsSelector } from "../Recoil/Selector";
 import { jaehaInfo } from "../jaehaInfo.js";
 import { PokemonType } from "./PokemonType";
 import { useEffect, useState } from "react";
 import { PokemonModal } from "./PokemonModal";
-import { offsetAtom, searchedPokemonAtom } from "../Recoil/Atom";
+import { limitAtom, offsetAtom, searchedPokemonAtom } from "../Recoil/Atom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export const PokemonList = () => {
-  const { results } = useRecoilValue(getPokemonsSelector);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
-  const setOffsetAtom = useSetRecoilState(offsetAtom);
+
+  const { results } = useRecoilValue(getPokemonsSelector);
+  const [offset, setOffset] = useRecoilState(offsetAtom);
   const [pokemonList, setPokemonList] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+
   const searchedPokemon = useRecoilValue(searchedPokemonAtom);
+  const [searchedPokemonList, setSearchedPokemonList] = useState([]);
+  const [limit, setLimit] = useRecoilState(limitAtom);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setOffsetAtom((prev) => prev + 19);
-        }
-      },
-      { rootMargin: "0px", threshold: 1.0 }
-    );
-    const target = document.querySelector(".loading");
-    observer.observe(target);
-
-    return () => {
-      observer.unobserve(target);
-    };
-  }, []);
+    setSearchedPokemonList([...searchedPokemon]);
+  }, [searchedPokemon]);
 
   useEffect(() => {
+    setSearchedPokemonList((prevList) => [...prevList, ...searchedPokemon]);
+  }, [limit]);
+
+  const loadMoresearchedData = () => {
+    if (hasMore) {
+      setLimit((prev) => ({
+        ...prev,
+        offset: prev.offset + 20,
+      }));
+    } else {
+      setHasMore(false);
+    }
+  };
+
+  //---------------
+
+  useEffect(() => {
+    console.log(results);
     setPokemonList([...pokemonList, ...results]);
-  }, [results]);
+  }, [offset]);
 
-  if (searchedPokemon) {
+  const loadMoreData = () => {
+    if (hasMore) {
+      setOffset((prev) => prev + 19);
+    } else {
+      setHasMore(false);
+    }
+  };
+
+  if (searchedPokemonList.length !== 0) {
     return (
       <>
-        <ListContainer>
-          <OneCard onClick={() => setIsOpenedModal(true)}>
-            <img
-              src={searchedPokemon.images.officialAtworkFront}
-              alt="포켓몬"
-            />
-            <div className="id">No.{searchedPokemon.id}</div>
-            <div className="name">{searchedPokemon.koreanName}</div>
-            <div className="type">
-              {searchedPokemon.types.map((type) => {
-                return <PokemonType type={type} key={type} />;
-              })}
-            </div>
-          </OneCard>
-          {isOpenedModal && (
-            <PokemonModal
-              pokemonInfo={searchedPokemon}
-              setIsOpenedModal={setIsOpenedModal}
-            />
-          )}
-        </ListContainer>
+        <InfiniteScroll
+          dataLength={searchedPokemonList.length}
+          next={loadMoresearchedData}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>You have seen it all</b>
+            </p>
+          }
+        >
+          <ListContainer>
+            {searchedPokemonList.map((pokemon, idx) => {
+              if (!pokemon) {
+                return null;
+              }
+              return (
+                <PokemonCard
+                  key={`${pokemon.name}_${idx}`}
+                  name={pokemon.name}
+                />
+              );
+            })}
+            {isOpenedModal && (
+              <PokemonModal
+                pokemonInfo={searchedPokemon}
+                setIsOpenedModal={setIsOpenedModal}
+              />
+            )}
+          </ListContainer>
+        </InfiniteScroll>
       </>
     );
   }
 
   return (
-    <ListContainer>
-      <OneCard onClick={() => setIsOpenedModal(true)}>
-        <img src={jaehaInfo.images.officialAtworkFront} alt="포켓몬" />
-        <div className="id">No.{jaehaInfo.id}</div>
-        <div className="name">{jaehaInfo.koreanName}</div>
-        <div className="type">
-          {jaehaInfo.types.map((type) => {
-            return <PokemonType type={type} key={type} />;
+    <>
+      <InfiniteScroll
+        dataLength={pokemonList.length}
+        next={loadMoreData}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>You have seen it all</b>
+          </p>
+        }
+      >
+        <ListContainer>
+          <OneCard onClick={() => setIsOpenedModal(true)}>
+            <img src={jaehaInfo.images.officialAtworkFront} alt="포켓몬" />
+            <div className="id">No.{jaehaInfo.id}</div>
+            <div className="name">{jaehaInfo.koreanName}</div>
+            <div className="type">
+              {jaehaInfo.types.map((type) => {
+                return <PokemonType type={type} key={type} />;
+              })}
+            </div>
+          </OneCard>
+          {pokemonList.map((pokemon, idx) => {
+            return (
+              <PokemonCard key={`${pokemon.name}_${idx}`} name={pokemon.name} />
+            );
           })}
-        </div>
-      </OneCard>
-      {pokemonList.map((pokemon, idx) => {
-        return (
-          <PokemonCard key={`${pokemon.name}_${idx}`} name={pokemon.name} />
-        );
-      })}
-      {isOpenedModal && (
-        <PokemonModal
-          pokemonInfo={jaehaInfo}
-          setIsOpenedModal={setIsOpenedModal}
-        />
-      )}
-      <div className="loading">로딩중</div>
-    </ListContainer>
+          {isOpenedModal && (
+            <PokemonModal
+              pokemonInfo={jaehaInfo}
+              setIsOpenedModal={setIsOpenedModal}
+            />
+          )}
+        </ListContainer>
+      </InfiniteScroll>
+    </>
   );
 };
 

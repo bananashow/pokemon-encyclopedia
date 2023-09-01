@@ -8,7 +8,7 @@ export const BattleModal = () => {
 
   return (
     <>
-      <ModalContainer isOpened={isOpened}>
+      <ModalContainer $isOpened={isOpened}>
         <Toggle onClick={() => setIsOpened((prev) => !prev)}>
           {isOpened ? (
             <div className="icon">
@@ -34,7 +34,7 @@ const ModalContainer = styled.div`
   position: fixed;
   width: 400px;
   height: 420px;
-  bottom: ${({ isOpened }) => (isOpened ? "0" : "-372px")};
+  bottom: ${({ $isOpened }) => ($isOpened ? "0" : "-372px")};
   right: 6px;
 `;
 

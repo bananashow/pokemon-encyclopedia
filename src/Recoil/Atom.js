@@ -7,10 +7,19 @@ export const offsetAtom = atom({
 
 export const searchedPokemonAtom = atom({
   key: "searchedPokemonAtom",
-  default: null,
+  default: [],
 });
 
 export const participatingPokemonAtom = atom({
   key: "participatingPokemonAtom",
   default: [],
+});
+
+export const limitAtom = atom({
+  key: "limitAtom",
+  default: {
+    type: "",
+    limit: 20,
+    offset: 0,
+  },
 });

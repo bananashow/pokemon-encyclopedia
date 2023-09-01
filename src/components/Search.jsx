@@ -13,7 +13,7 @@ export const Search = () => {
 
   const getPokemonInfo = async (enName) => {
     const result = await getPokemonsInfo(enName);
-    setSearchedPokemon(result);
+    setSearchedPokemon([result]);
   };
 
   const handleSearch = async () => {
@@ -38,7 +38,7 @@ export const Search = () => {
   const handleRefresh = () => {
     inputRef.current.value = "";
     inputRef.current.focus();
-    getPokemonInfo(null);
+    setSearchedPokemon([]);
   };
 
   return (

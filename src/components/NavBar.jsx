@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import pokeball from "../assets/pokeball.png";
 import { useNavigate } from "react-router-dom";
 import { Search } from "./Search";
+import { TypeFilter } from "./TypeFilter";
 
 export const NavBar = () => {
   const navigation = useNavigate();
@@ -9,14 +10,19 @@ export const NavBar = () => {
     <>
       <NavContainer>
         <NavWrap>
-          <Title onClick={() => navigation("/")}>
-            <div className="name">재하의</div>
-            <div className="title">
-              <img src={pokeball} />
-              포켓몬 도감
-            </div>
-          </Title>
-          <Search />
+          <div className="title-section">
+            <Title onClick={() => navigation("/")}>
+              <div className="name">재하의</div>
+              <div className="title">
+                <img src={pokeball} />
+                포켓몬 도감
+              </div>
+            </Title>
+          </div>
+          <div className="search-section">
+            <Search />
+            <TypeFilter />
+          </div>
         </NavWrap>
       </NavContainer>
     </>
@@ -25,24 +31,26 @@ export const NavBar = () => {
 
 const NavContainer = styled.nav`
   width: 100%;
-  height: 120px;
+  height: 240px;
+  min-width: 1148px;
   background-color: #3b3838;
   color: #fff;
+  display: flex;
+  align-items: center;
 `;
 
 const NavWrap = styled.div`
   width: 80%;
-  height: 120px;
   margin: 0 auto;
-
   display: flex;
   align-items: center;
-  flex: 1;
+
+  .search-section {
+    flex: 1;
+  }
 
   input {
     padding: 8px 12px;
-    margin: 0 20px;
-    height: 50px;
     border: none;
     background-color: #111111;
     border-radius: 12px;
@@ -73,7 +81,7 @@ const NavWrap = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 32px;
+  font-size: 42px;
   margin-right: 15px;
   display: flex;
   flex-direction: column;
@@ -82,9 +90,9 @@ const Title = styled.div`
   cursor: pointer;
 
   .name {
-    font-size: 24px;
+    font-size: 32px;
     padding: 2px 6px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     background-color: #d13d3d;
     border-radius: 12px;
     border-bottom-left-radius: 0;
