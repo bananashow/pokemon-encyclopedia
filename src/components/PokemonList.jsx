@@ -43,7 +43,6 @@ export const PokemonList = () => {
   //---------------
 
   useEffect(() => {
-    console.log(results);
     setPokemonList([...pokemonList, ...results]);
   }, [offset]);
 

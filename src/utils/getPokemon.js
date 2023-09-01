@@ -17,6 +17,7 @@ export const getSearchPokemon = async (koName) => {
     return doc.data().enName;
   } else {
     console.log("No document found with koName:", koName);
+    alert("검색 결과가 없어요!");
     return null;
   }
 };

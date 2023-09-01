@@ -88,7 +88,7 @@ const NavWrap = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 42px;
+  font-size: 34px;
   margin-right: 15px;
   display: flex;
   flex-direction: column;
@@ -97,7 +97,7 @@ const Title = styled.div`
   cursor: pointer;
 
   .name {
-    font-size: 32px;
+    font-size: 28px;
     padding: 2px 6px;
     margin-bottom: 12px;
     background-color: #d13d3d;

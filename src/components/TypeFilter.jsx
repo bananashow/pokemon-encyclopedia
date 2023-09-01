@@ -67,6 +67,7 @@ export const TypeFilter = () => {
 const Types = styled.div`
   display: flex;
   flex-wrap: wrap;
+  width: 90%;
   gap: 12px;
   margin-left: 24px;
   padding: 12px 0;
@@ -75,7 +76,7 @@ const Types = styled.div`
 const Type = styled.div`
   background-color: ${(props) => props.$color};
   padding: 8px 12px;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 8px;
   cursor: pointer;
 `;
