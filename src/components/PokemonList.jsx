@@ -62,7 +62,7 @@ export const PokemonList = () => {
           dataLength={searchedPokemonList.length}
           next={loadMoresearchedData}
           hasMore={true}
-          loader={<h4>Loading...</h4>}
+          // loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>You have seen it all</b>
@@ -99,7 +99,7 @@ export const PokemonList = () => {
         dataLength={pokemonList.length}
         next={loadMoreData}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        // loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>You have seen it all</b>
@@ -144,6 +144,7 @@ const ListContainer = styled.div`
 
 const OneCard = styled.div`
   height: 340px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

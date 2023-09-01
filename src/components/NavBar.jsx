@@ -3,14 +3,21 @@ import pokeball from "../assets/pokeball.png";
 import { useNavigate } from "react-router-dom";
 import { Search } from "./Search";
 import { TypeFilter } from "./TypeFilter";
+import { useSetRecoilState } from "recoil";
+import { searchedPokemonAtom } from "../Recoil/Atom";
 
 export const NavBar = () => {
   const navigation = useNavigate();
+  const setSearchedPokemon = useSetRecoilState(searchedPokemonAtom);
+
+  const handleLogo = () => {
+    setSearchedPokemon([]);
+  };
   return (
     <>
       <NavContainer>
         <NavWrap>
-          <div className="title-section">
+          <div className="title-section" onClick={handleLogo}>
             <Title onClick={() => navigation("/")}>
               <div className="name">재하의</div>
               <div className="title">
