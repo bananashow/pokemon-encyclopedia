@@ -11,10 +11,18 @@ export const PokemonModal = ({ pokemonInfo, setIsOpenedModal }) => {
   );
 
   const participateInBattle = () => {
-    if (participatingPokemon.length === 0) {
-      setParticipatingPokemon([pokemonInfo]);
-    } else if (participatingPokemon.length === 1) {
-      setParticipatingPokemon([...participatingPokemon, pokemonInfo]);
+    if (!participatingPokemon[0]) {
+      setParticipatingPokemon((prevPokemons) => {
+        const newPokemons = [...prevPokemons];
+        newPokemons[0] = pokemonInfo;
+        return newPokemons;
+      });
+    } else if (!participatingPokemon[1]) {
+      setParticipatingPokemon((prevPokemons) => {
+        const newPokemons = [...prevPokemons];
+        newPokemons[1] = pokemonInfo;
+        return newPokemons;
+      });
     } else {
       alert("자리가 없어요!");
     }
@@ -30,7 +38,6 @@ export const PokemonModal = ({ pokemonInfo, setIsOpenedModal }) => {
             {pokemonInfo.koreanName}
             <span className="en-name">({pokemonInfo.name})</span>
           </h2>
-
           <img src={pokemonInfo.images.officialAtworkFront} alt="포켓몬" />
           <button className="fight" onClick={participateInBattle}>
             FIGHT

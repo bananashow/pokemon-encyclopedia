@@ -33,8 +33,8 @@ export const BattleModal = () => {
 const ModalContainer = styled.div`
   position: fixed;
   width: 400px;
-  height: 400px;
-  bottom: ${({ isOpened }) => (isOpened ? "0" : "-352px")};
+  height: 420px;
+  bottom: ${({ isOpened }) => (isOpened ? "0" : "-372px")};
   right: 6px;
 `;
 
@@ -45,6 +45,7 @@ const Toggle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   .icon {
     color: #fff;
@@ -54,7 +55,7 @@ const Toggle = styled.div`
 
 const Modal = styled.div`
   width: 400px;
-  height: 352px;
+  height: 372px;
   border: 3px solid #3b3838;
   background-color: #fff;
 `;

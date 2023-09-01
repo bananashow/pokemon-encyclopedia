@@ -20,6 +20,7 @@ export const Search = () => {
     let enName = await getSearchPokemon(searchKeyword);
     if (inputRef.current.value === "") {
       alert("검색어를 입력하세요!");
+      inputRef.current.focus();
       return;
     } else {
       enName = enName?.toLowerCase();
